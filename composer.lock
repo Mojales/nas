@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1a02b954b335aeca986dbc9465bfcfc1",
+    "content-hash": "ebc28f4a583e9a735522cd5c7f7914c4",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1365,43 +1365,6 @@
             "time": "2016-10-10T12:19:37+00:00"
         },
         {
-            "name": "qsomazzi/synology",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/qsomazzi/synology.git",
-                "reference": "9a73d5597cbefe98bb94c5bdddc40ccb5a3d147f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/qsomazzi/synology/zipball/9a73d5597cbefe98bb94c5bdddc40ccb5a3d147f",
-                "reference": "9a73d5597cbefe98bb94c5bdddc40ccb5a3d147f",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Synology": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Quentin SOMAZZI",
-                    "homepage": "http://qsomazzi.fr/"
-                }
-            ],
-            "description": "Handle Synology API",
-            "keywords": [
-                "api",
-                "synology"
-            ],
-            "time": "2016-09-05 21:46:22"
-        },
-        {
             "name": "sensio/distribution-bundle",
             "version": "v5.0.18",
             "source": {
@@ -2402,9 +2365,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "qsomazzi/synology": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

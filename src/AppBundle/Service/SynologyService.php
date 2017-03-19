@@ -2,7 +2,8 @@
 
 namespace AppBundle\Service;
 
-use Synology\Applications\DownloadStation;
+use AppBundle\Model\Torrent;
+use GuzzleHttp\Client;
 
 class SynologyService
 {
@@ -13,7 +14,7 @@ class SynologyService
     protected $version;
     protected $login;
     protected $pass;
-    protected $client;
+    protected $sid;
 
     public function __construct($ip, $port, $protocol, $version, $login, $pass)
     {
@@ -25,20 +26,54 @@ class SynologyService
         $this->pass = $pass;
     }
 
-    public function createClient()
+    public function getSid()
     {
-        if (null === $this->client) {
-            $this->client = new DownloadStation($this->ip, $this->port, $this->protocol, $this->version);
-            $this->client->connect($this->login, $this->pass);
+        if (null === $this->sid) {
+            $client = new Client();
+            $get = \GuzzleHttp\Psr7\build_query([
+                'api' => 'SYNO.API.Auth',
+                'version' => $this->version,
+                'method' => 'login',
+                'account' => $this->login,
+                'passwd' => $this->pass,
+                'session' => 'DownloadStation',
+                'format' => 'sid'
+            ]);
+            $response = $client->request(
+                'GET',
+                $this->protocol . '://' . $this->ip . '/webapi/auth.cgi?' . $get
+            );
+            $data = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
+            if ($data['success']) {
+                $this->sid = $data['data']['sid'];
+            }
         }
 
-        return $this->client;
+        return $this->sid;
     }
 
-    public function addTorrent($path)
+    public function addTorrent($pathTorrent, $destination)
     {
-        $client = $this->createClient();
-        $client->addTask($path);
+        $client = new Client();
+
+        $torrent = new Torrent($pathTorrent);
+
+        $response = $client->request(
+            'POST',
+            $this->protocol . '://' . $this->ip . '/webapi/DownloadStation/task.cgi',
+            [
+                'api' => 'SYNO.DownloadStation.Task',
+                'version' => $this->version,
+                'method' => 'create',
+                '_sid' => $this->getSid(),
+                'destination' => $destination,
+                'uri' => rawurlencode($destination),
+            ]
+        );
+
+        var_dump($response->getStatusCode(), $response->getBody()->getContents());
+        die;
+
     }
 
 }
