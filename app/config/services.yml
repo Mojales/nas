@@ -4,6 +4,9 @@ parameters:
     #parameter_name: value
 
 services:
-    #service_name:
-    #    class: AppBundle\Directory\ClassName
-    #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+    app.t411:
+        class: AppBundle\Service\T411Service
+        arguments:
+            - "%t411_domain%"
+            - "%t411_login%"
+            - "%t411_pass%"

@@ -17,3 +17,7 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    t411_login: ~
+    t411_pass: ~
+    t411_domain: https://www.t411.li
