@@ -31,7 +31,9 @@ class NasService
         if (!$fileSystem->exists($path)) {
             $fileSystem->mkdir($path);
             if ($this->chown) {
-                $fileSystem->chown($path, 'admin:users');
+                list($user, $group) = explode($this->chown);
+                $fileSystem->chown($path, $user);
+                $fileSystem->chgrp($path, $group);
             }
         }
 
