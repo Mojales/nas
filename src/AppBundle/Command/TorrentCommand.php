@@ -28,8 +28,10 @@ class TorrentCommand extends ContainerAwareCommand
         foreach ($tvShows as $tvShow) {
             $results = $this->getContainer()->get('app.t411')->searchNewTvShow($tvShow);
             foreach ($results as $season => $episodes) {
+                $this->getContainer()->get('app.nas')->pathExist($tvShow, $season);
                 foreach ($episodes as $episode => $torrent) {
-                    var_dump($season, $episode, $torrent->getName());
+                    $file = $this->getContainer()->get('app.t411')->downloadTorrent($torrent);
+                    $this->getContainer()->get('app.synology')->addTorrent($file->getRealPath());
                 }
             }
         }

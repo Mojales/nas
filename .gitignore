@@ -15,3 +15,5 @@
 /vendor/
 /web/bundles
 /app/Resources/db/nas.db3
+/web/torrents/*
+!/web/torrents/.gitkeep

@@ -20,4 +20,14 @@ parameters:
 
     t411_login: ~
     t411_pass: ~
-    t411_domain: https://www.t411.li
+    t411_path_torrent: "%kernel.root_dir%/../var/torrents/"
+    t411_domain: http://api.t411.li/
+    path_tvshow: "%kernel.root_dir%/../web/"
+    chown_path: ~
+
+    nas_ip: ~
+    nas_port: 5000
+    nas_protocol: http
+    nas_version: 1
+    nas_login: ~
+    nas_pass: ~

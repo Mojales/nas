@@ -10,3 +10,20 @@ services:
             - "%t411_domain%"
             - "%t411_login%"
             - "%t411_pass%"
+            - "%t411_path_torrent%"
+
+    app.nas:
+        class: AppBundle\Service\NasService
+        arguments:
+            - "%path_tvshow%"
+            - "%chown_path%"
+
+    app.synology:
+        class: AppBundle\Service\SynologyService
+        arguments:
+            - "%nas_ip%"
+            - "%nas_port%"
+            - "%nas_protocol%"
+            - "%nas_version%"
+            - "%nas_login%"
+            - "%nas_pass%"

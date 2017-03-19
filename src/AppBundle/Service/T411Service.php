@@ -4,7 +4,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\TvShow;
 use GuzzleHttp\Client;
-use Martial\T411\Api\Torrent\Torrent;
+use Martial\T411\Api\Torrent\TorrentInterface;
 
 class T411Service
 {
@@ -14,6 +14,7 @@ class T411Service
     protected $pass;
     protected $token;
     protected $client;
+    protected $pathTorrent;
 
     /**
      * T411Service constructor.
@@ -21,11 +22,12 @@ class T411Service
      * @param $login
      * @param $pass
      */
-    public function __construct($domain, $login, $pass)
+    public function __construct($domain, $login, $pass, $pathTorrent)
     {
         $this->domain = $domain;
         $this->login = $login;
         $this->pass = $pass;
+        $this->pathTorrent = $pathTorrent;
     }
 
     /**
@@ -43,7 +45,7 @@ class T411Service
             $queryFactory = new \Martial\T411\Api\Search\QueryFactory();
 
             $config = [
-                'torrent_files_path' => '/path/where/your/torrents/are/stored',
+                'torrent_files_path' => $this->pathTorrent,
                 'verify' => false
             ];
 
@@ -98,6 +100,7 @@ class T411Service
             }
         }
         ksort($torrents);
+
         return $torrents;
     }
 
@@ -116,4 +119,14 @@ class T411Service
         return (int)$result->getTotal();
     }
 
+    /**
+     * @param TorrentInterface $torrent
+     * @return \Symfony\Component\HttpFoundation\File\File
+     */
+    public function downloadTorrent(TorrentInterface $torrent)
+    {
+        $client = $this->createClient();
+        $file = $client->download($this->getToken(), $torrent->getId());
+        return $file;
+    }
 }
