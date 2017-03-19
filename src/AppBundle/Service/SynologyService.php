@@ -29,16 +29,7 @@ class SynologyService
     public function getSid()
     {
         if (null === $this->sid) {
-            $get = \GuzzleHttp\Psr7\build_query([
-                'api' => 'SYNO.API.Auth',
-                'version' => $this->version,
-                'method' => 'login',
-                'account' => $this->login,
-                'passwd' => $this->pass,
-                'session' => 'DownloadStation',
-                'format' => 'sid'
-            ]);
-            $response = file_get_contents($this->protocol . '://' . $this->ip . '/webapi/auth.cgi?'.$get);
+            $response = file_get_contents($this->protocol . '://' . $this->ip . '/webapi/auth.cgi?/webapi/auth.cgi?api=SYNO.API.Auth&version=2&method=login&account='.$this->login.'&passwd='.$this->pass.'&session=DownloadStation&format=sid');
             $data = \GuzzleHttp\json_decode($response, true);
             if ($data['success']) {
                 $this->sid = $data['data']['sid'];
